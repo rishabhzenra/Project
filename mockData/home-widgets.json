@@ -1,0 +1,65 @@
+[
+  {
+    "id": "w1",
+    "type": "account_list",
+    "title": "Your Account",
+    "icon": "bank",
+    "order": 1,
+    "action": "navigate:Accounts",
+    "visible": true
+  },
+  {
+    "id": "w2",
+    "type": "quick_actions",
+    "title": "Receive Money",
+    "icon": "qr",
+    "order": 2,
+    "action": "navigate:UPI",
+    "visible": true
+  },
+  {
+    "id": "w3",
+    "type": "bill_payment",
+    "title": "Bill Payment",
+    "icon": "bill",
+    "order": 3,
+    "action": "navigate:BillPay",
+    "visible": true
+  },
+  {
+    "id": "w4",
+    "type": "recent_transactions",
+    "title": "Recent Transactions",
+    "icon": "txn",
+    "order": 4,
+    "action": "navigate:Transactions",
+    "visible": true
+  },
+  {
+    "id": "w5",
+    "type": "fixed_deposits",
+    "title": "Fixed Deposits",
+    "icon": "fd",
+    "order": 5,
+    "action": "navigate:FixedDeposits",
+    "visible": true
+  },
+  {
+    "id": "w6",
+    "type": "loan_info",
+    "title": "Loan Information",
+    "icon": "loan",
+    "order": 6,
+    "action": "navigate:Loans",
+    "visible": true
+  },
+  {
+    "id": "w7",
+    "type": "offers",
+    "title": "Offers & Promotions",
+    "icon": "offer",
+    "order": 7,
+    "action": "navigate:Offers",
+    "visible": true
+  }
+]

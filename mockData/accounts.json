@@ -1,0 +1,23 @@
+[
+  {
+    "id": "a1",
+    "bankName": "OneStack Bharat Bank",
+    "accountNumber": "10009560389644",
+    "accountType": "Savings",
+    "balance": 134500.00
+  },
+  {
+    "id": "a2",
+    "bankName": "OneStack Bharat Bank",
+    "accountNumber": "10009560391822",
+    "accountType": "Current",
+    "balance": 58200.50
+  },
+  {
+    "id": "a3",
+    "bankName": "OneStack Bharat Bank",
+    "accountNumber": "10009560402011",
+    "accountType": "Salary",
+    "balance": 55900.00
+  }
+]

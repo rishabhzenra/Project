@@ -1,0 +1,29 @@
+[
+  {
+    "id": "fd1",
+    "bank": "OneStack Bharat Bank",
+    "principal": 100000,
+    "interestRate": 8.5,
+    "maturityDate": "12 Dec 2026",
+    "maturityAmount": 108500,
+    "status": "active"
+  },
+  {
+    "id": "fd2",
+    "bank": "OneStack Bharat Bank",
+    "principal": 50000,
+    "interestRate": 7.9,
+    "maturityDate": "03 Mar 2027",
+    "maturityAmount": 53950,
+    "status": "active"
+  },
+  {
+    "id": "fd3",
+    "bank": "OneStack Bharat Bank",
+    "principal": 25000,
+    "interestRate": 7.5,
+    "maturityDate": "18 Sep 2025",
+    "maturityAmount": 26875,
+    "status": "matured"
+  }
+]

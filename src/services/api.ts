@@ -1,18 +1,28 @@
-const BASE = 'https://67fce2752c55e01d269e2fb9.mockapi.io/api/v1';
+import homeWidgets from '../../mockData/home-widgets.json';
+import users from '../../mockData/user.json';
+import accounts from '../../mockData/accounts.json';
+import transactions from '../../mockData/transactions.json';
+import offers from '../../mockData/offers.json';
+import fixedDeposits from '../../mockData/fixed-deposits.json';
+import loans from '../../mockData/loans.json';
+import billCategories from '../../mockData/bill-categories.json';
 
-async function get<T>(endpoint: string): Promise<T> {
-  const res = await fetch(`${BASE}${endpoint}`);
-  if (!res.ok) throw new Error(`API error: ${res.status}`);
-  return res.json();
+import type {
+  Widget, Account, Transaction, UserProfile,
+  Offer, FixedDeposit, Loan, BillCategory,
+} from '../types';
+
+function delay<T>(data: T, ms = 400): Promise<T> {
+  return new Promise(resolve => setTimeout(() => resolve(data), ms));
 }
 
 export const api = {
-  getHomeWidgets: () => get<import('../types').Widget[]>('/home-widgets'),
-  getAccounts: () => get<import('../types').Account[]>('/accounts'),
-  getTransactions: () => get<import('../types').Transaction[]>('/transactions'),
-  getUserProfile: () => get<import('../types').UserProfile[]>('/user').then(r => r[0]),
-  getOffers: () => get<import('../types').Offer[]>('/offers'),
-  getFixedDeposits: () => get<import('../types').FixedDeposit[]>('/fixed-deposits'),
-  getLoans: () => get<import('../types').Loan[]>('/loans'),
-  getBillCategories: () => get<import('../types').BillCategory[]>('/bill-categories'),
+  getHomeWidgets: () => delay(homeWidgets as Widget[]),
+  getAccounts: () => delay(accounts as Account[]),
+  getTransactions: () => delay(transactions as Transaction[]),
+  getUserProfile: () => delay((users as UserProfile[])[0]),
+  getOffers: () => delay(offers as Offer[]),
+  getFixedDeposits: () => delay(fixedDeposits as FixedDeposit[]),
+  getLoans: () => delay(loans as Loan[]),
+  getBillCategories: () => delay(billCategories as BillCategory[]),
 };

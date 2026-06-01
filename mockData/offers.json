@@ -1,0 +1,42 @@
+[
+  {
+    "id": "o1",
+    "title": "10% Cashback on Utility Bills",
+    "description": "Pay electricity, water or gas bills via OneStack and get 10% cashback up to ₹200 per month.",
+    "imageUrl": "",
+    "validTill": "30 Jun 2026",
+    "tag": "CASHBACK"
+  },
+  {
+    "id": "o2",
+    "title": "Zero Processing Fee Home Loan",
+    "description": "Apply for a home loan this month and enjoy zero processing charges. Limited slots available.",
+    "imageUrl": "",
+    "validTill": "15 Jun 2026",
+    "tag": "LOAN OFFER"
+  },
+  {
+    "id": "o3",
+    "title": "8.5% Interest on Fixed Deposits",
+    "description": "Book an FD for 1 year and above to lock in our special 8.5% p.a. rate available only for existing customers.",
+    "imageUrl": "",
+    "validTill": "30 Jun 2026",
+    "tag": "FD SPECIAL"
+  },
+  {
+    "id": "o4",
+    "title": "Refer & Earn ₹500",
+    "description": "Invite a friend to open a OneStack account. You both get ₹250 credited once they complete their first transaction.",
+    "imageUrl": "",
+    "validTill": "31 Jul 2026",
+    "tag": "REFERRAL"
+  },
+  {
+    "id": "o5",
+    "title": "Free DEMAT Account Opening",
+    "description": "Open a DEMAT account linked to your bank account with zero annual maintenance for the first year.",
+    "imageUrl": "",
+    "validTill": "30 Jun 2026",
+    "tag": "INVEST"
+  }
+]

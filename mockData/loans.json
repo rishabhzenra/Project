@@ -1,0 +1,20 @@
+[
+  {
+    "id": "l1",
+    "type": "Home Loan",
+    "principal": 3500000,
+    "outstanding": 2980000,
+    "emi": 31500,
+    "nextDueDate": "05 Jul 2026",
+    "status": "active"
+  },
+  {
+    "id": "l2",
+    "type": "Personal Loan",
+    "principal": 300000,
+    "outstanding": 142000,
+    "emi": 9800,
+    "nextDueDate": "10 Jul 2026",
+    "status": "active"
+  }
+]

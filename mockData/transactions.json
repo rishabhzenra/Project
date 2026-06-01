@@ -1,0 +1,92 @@
+[
+  {
+    "id": "t1",
+    "title": "Salary Credit",
+    "subtitle": "NEFT from Employer",
+    "amount": 55000,
+    "type": "credit",
+    "date": "01 Jun 2026",
+    "category": "salary"
+  },
+  {
+    "id": "t2",
+    "title": "Swiggy Food Order",
+    "subtitle": "UPI · swiggy@icici",
+    "amount": 482,
+    "type": "debit",
+    "date": "31 May 2026",
+    "category": "upi"
+  },
+  {
+    "id": "t3",
+    "title": "Amazon Shopping",
+    "subtitle": "UPI · amazon@axis",
+    "amount": 2199,
+    "type": "debit",
+    "date": "30 May 2026",
+    "category": "upi"
+  },
+  {
+    "id": "t4",
+    "title": "Rent Transfer",
+    "subtitle": "IMPS to landlord",
+    "amount": 18000,
+    "type": "debit",
+    "date": "28 May 2026",
+    "category": "transfer"
+  },
+  {
+    "id": "t5",
+    "title": "FD Interest Credit",
+    "subtitle": "Quarterly interest",
+    "amount": 3425,
+    "type": "credit",
+    "date": "25 May 2026",
+    "category": "interest"
+  },
+  {
+    "id": "t6",
+    "title": "Netflix Subscription",
+    "subtitle": "UPI · netflix@ybl",
+    "amount": 649,
+    "type": "debit",
+    "date": "24 May 2026",
+    "category": "upi"
+  },
+  {
+    "id": "t7",
+    "title": "Electricity Bill",
+    "subtitle": "BBPS · BSES Delhi",
+    "amount": 1340,
+    "type": "debit",
+    "date": "22 May 2026",
+    "category": "bill"
+  },
+  {
+    "id": "t8",
+    "title": "Refund from Myntra",
+    "subtitle": "UPI · myntra@kotak",
+    "amount": 1099,
+    "type": "credit",
+    "date": "20 May 2026",
+    "category": "upi"
+  },
+  {
+    "id": "t9",
+    "title": "Home Loan EMI",
+    "subtitle": "Auto-debit",
+    "amount": 21500,
+    "type": "debit",
+    "date": "05 May 2026",
+    "category": "loan"
+  },
+  {
+    "id": "t10",
+    "title": "Dividend Credit",
+    "subtitle": "NSDL · Mutual Fund",
+    "amount": 4200,
+    "type": "credit",
+    "date": "02 May 2026",
+    "category": "investment"
+  }
+]

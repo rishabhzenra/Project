@@ -1,0 +1,10 @@
+[
+  { "id": "bc1", "label": "Broadband Postpaid", "icon": "📡", "action": "navigate:BillPay" },
+  { "id": "bc2", "label": "Mobile Prepaid", "icon": "📱", "action": "navigate:BillPay" },
+  { "id": "bc3", "label": "DTH", "icon": "📺", "action": "navigate:BillPay" },
+  { "id": "bc4", "label": "Mobile Postpaid", "icon": "☎️", "action": "navigate:BillPay" },
+  { "id": "bc5", "label": "Electricity", "icon": "⚡", "action": "navigate:BillPay" },
+  { "id": "bc6", "label": "Water Bill", "icon": "💧", "action": "navigate:BillPay" },
+  { "id": "bc7", "label": "Gas Cylinder", "icon": "🔥", "action": "navigate:BillPay" },
+  { "id": "bc8", "label": "Insurance", "icon": "🛡️", "action": "navigate:BillPay" }
+]
