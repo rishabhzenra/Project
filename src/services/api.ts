@@ -1,28 +1,24 @@
-import homeWidgets from '../../mockData/home-widgets.json';
-import users from '../../mockData/user.json';
-import accounts from '../../mockData/accounts.json';
-import transactions from '../../mockData/transactions.json';
-import offers from '../../mockData/offers.json';
-import fixedDeposits from '../../mockData/fixed-deposits.json';
-import loans from '../../mockData/loans.json';
-import billCategories from '../../mockData/bill-categories.json';
-
 import type {
   Widget, Account, Transaction, UserProfile,
   Offer, FixedDeposit, Loan, BillCategory,
 } from '../types';
 
-function delay<T>(data: T, ms = 400): Promise<T> {
-  return new Promise(resolve => setTimeout(() => resolve(data), ms));
+const BEECEPTOR = 'https://onestack-bank.free.beeceptor.com/api/v1';
+const GIST = 'https://gist.githubusercontent.com/rishabhzenra/bff157afa6214e490f3662752886f485/raw';
+
+async function get<T>(url: string): Promise<T> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+  return res.json();
 }
 
 export const api = {
-  getHomeWidgets: () => delay(homeWidgets as Widget[]),
-  getAccounts: () => delay(accounts as Account[]),
-  getTransactions: () => delay(transactions as Transaction[]),
-  getUserProfile: () => delay((users as UserProfile[])[0]),
-  getOffers: () => delay(offers as Offer[]),
-  getFixedDeposits: () => delay(fixedDeposits as FixedDeposit[]),
-  getLoans: () => delay(loans as Loan[]),
-  getBillCategories: () => delay(billCategories as BillCategory[]),
+  getHomeWidgets: () => get<Widget[]>(`${BEECEPTOR}/home-widgets`),
+  getUserProfile: () => get<UserProfile[]>(`${BEECEPTOR}/user`).then(r => r[0]),
+  getAccounts: () => get<Account[]>(`${GIST}/accounts.json`),
+  getTransactions: () => get<Transaction[]>(`${GIST}/transactions.json`),
+  getOffers: () => get<Offer[]>(`${GIST}/offers.json`),
+  getFixedDeposits: () => get<FixedDeposit[]>(`${GIST}/fixed-deposits.json`),
+  getLoans: () => get<Loan[]>(`${GIST}/loans.json`),
+  getBillCategories: () => get<BillCategory[]>(`${GIST}/bill-categories.json`),
 };
