@@ -1,5 +1,6 @@
 import React from 'react';
 import { Widget } from '../types';
+import BalanceCardWidget from './widgets/BalanceCardWidget';
 import AccountListWidget from './widgets/AccountListWidget';
 import QuickActionsWidget from './widgets/QuickActionsWidget';
 import BillPaymentWidget from './widgets/BillPaymentWidget';
@@ -15,6 +16,8 @@ interface Props {
 
 export default function WidgetRenderer({ widget, navigation }: Props) {
   switch (widget.type) {
+    case 'balance_card':
+      return <BalanceCardWidget widget={widget} navigation={navigation} />;
     case 'account_list':
       return <AccountListWidget widget={widget} navigation={navigation} />;
     case 'quick_actions':

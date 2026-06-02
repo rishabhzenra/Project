@@ -7,7 +7,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { api } from '../services/api';
 import { Widget, UserProfile } from '../types';
-import BalanceCard from '../components/BalanceCard';
 import WidgetRenderer from '../components/WidgetRenderer';
 import { Colors } from '../constants/colors';
 
@@ -17,7 +16,6 @@ export default function HomeScreen({ navigation }: any) {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [balanceLoading, setBalanceLoading] = useState(false);
 
   const loadData = useCallback(async (isRefresh = false) => {
     try {
@@ -36,11 +34,6 @@ export default function HomeScreen({ navigation }: any) {
   }, []);
 
   useEffect(() => { loadData(); }, [loadData]);
-
-  const handleRefreshBalance = () => {
-    setBalanceLoading(true);
-    api.getUserProfile().then(setProfile).finally(() => setBalanceLoading(false));
-  };
 
   if (loading) {
     return (
@@ -79,12 +72,6 @@ export default function HomeScreen({ navigation }: any) {
           />
         }
       >
-        <BalanceCard
-          netWorth={profile?.netWorth ?? null}
-          loading={balanceLoading}
-          onRefresh={handleRefreshBalance}
-        />
-
         {widgets.map(widget => (
           <WidgetRenderer key={widget.id} widget={widget} navigation={navigation} />
         ))}
