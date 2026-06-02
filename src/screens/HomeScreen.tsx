@@ -3,6 +3,7 @@ import {
   ScrollView, View, Text, StyleSheet,
   TouchableOpacity, RefreshControl, ActivityIndicator,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { api } from '../services/api';
 import { Widget, UserProfile } from '../types';
@@ -64,8 +65,7 @@ export default function HomeScreen({ navigation }: any) {
           </View>
         </View>
         <TouchableOpacity style={styles.notifBtn} onPress={() => navigation.navigate('Profile')}>
-          <View style={styles.notifDot} />
-          <Text style={styles.notifLabel}>N</Text>
+          <Ionicons name="notifications" size={20} color={Colors.text} />
         </TouchableOpacity>
       </View>
 
@@ -133,19 +133,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryLight,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  notifDot: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    width: 7,
-    height: 7,
-    borderRadius: 4,
-    backgroundColor: Colors.primary,
-  },
-  notifLabel: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: Colors.primary,
   },
 });

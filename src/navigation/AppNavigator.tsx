@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../constants/colors';
 
 import HomeScreen from '../screens/HomeScreen';
@@ -105,7 +105,9 @@ export default function AppNavigator() {
           component={HomeStack}
           options={{
             title: 'Home',
-            tabBarIcon: ({ color }) => <Text style={{ fontSize: 16, color }}>H</Text>,
+            tabBarIcon: ({ color, focused }) => (
+              <Ionicons name={focused ? 'home' : 'home-outline'} size={22} color={color} />
+            ),
           }}
         />
         <Tab.Screen
@@ -113,7 +115,9 @@ export default function AppNavigator() {
           component={BankingStack}
           options={{
             title: 'Banking',
-            tabBarIcon: ({ color }) => <Text style={{ fontSize: 16, color }}>B</Text>,
+            tabBarIcon: ({ color, focused }) => (
+              <Ionicons name={focused ? 'card' : 'card-outline'} size={22} color={color} />
+            ),
           }}
         />
         <Tab.Screen
@@ -121,7 +125,9 @@ export default function AppNavigator() {
           component={PaymentsStack}
           options={{
             title: 'Payments',
-            tabBarIcon: ({ color }) => <Text style={{ fontSize: 16, color }}>P</Text>,
+            tabBarIcon: ({ color, focused }) => (
+              <Ionicons name={focused ? 'swap-horizontal' : 'swap-horizontal-outline'} size={22} color={color} />
+            ),
           }}
         />
         <Tab.Screen
@@ -129,7 +135,9 @@ export default function AppNavigator() {
           component={InsuranceStack}
           options={{
             title: 'Insurance',
-            tabBarIcon: ({ color }) => <Text style={{ fontSize: 16, color }}>I</Text>,
+            tabBarIcon: ({ color, focused }) => (
+              <Ionicons name={focused ? 'shield-checkmark' : 'shield-checkmark-outline'} size={22} color={color} />
+            ),
           }}
         />
       </Tab.Navigator>

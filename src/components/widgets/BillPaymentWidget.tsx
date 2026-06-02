@@ -33,7 +33,7 @@ export default function BillPaymentWidget({ widget, navigation }: Props) {
               activeOpacity={0.7}
             >
               <View style={styles.iconBox}>
-                <Text style={styles.iconText}>{cat.label.slice(0, 2).toUpperCase()}</Text>
+                <Text style={styles.emoji}>{cat.icon}</Text>
               </View>
               <Text style={styles.label} numberOfLines={2}>{cat.label}</Text>
             </TouchableOpacity>
@@ -72,11 +72,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 1,
   },
-  iconText: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: Colors.primary,
-    letterSpacing: 0.5,
+  emoji: {
+    fontSize: 22,
   },
   label: {
     fontSize: 10,

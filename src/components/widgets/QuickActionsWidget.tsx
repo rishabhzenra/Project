@@ -1,14 +1,17 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { Widget } from '../../types';
 import SectionHeader from '../SectionHeader';
 import { Colors } from '../../constants/colors';
 
-const ACTIONS = [
-  { label: 'QR Code', abbr: 'QR', route: 'QRCode' },
-  { label: 'UPI ID', abbr: 'UP', route: 'UPI' },
-  { label: 'History', abbr: 'HX', route: 'UPIHistory' },
-  { label: 'Send', abbr: 'SN', route: 'FundTransfer' },
+type IoniconName = React.ComponentProps<typeof Ionicons>['name'];
+
+const ACTIONS: { label: string; icon: IoniconName; route: string }[] = [
+  { label: 'QR Code', icon: 'qr-code-outline', route: 'QRCode' },
+  { label: 'UPI ID', icon: 'phone-portrait-outline', route: 'UPI' },
+  { label: 'History', icon: 'time-outline', route: 'UPIHistory' },
+  { label: 'Send Money', icon: 'arrow-up-circle-outline', route: 'FundTransfer' },
 ];
 
 interface Props {
@@ -29,7 +32,7 @@ export default function QuickActionsWidget({ widget, navigation }: Props) {
             activeOpacity={0.7}
           >
             <View style={styles.iconCircle}>
-              <Text style={styles.abbr}>{action.abbr}</Text>
+              <Ionicons name={action.icon} size={24} color={Colors.primary} />
             </View>
             <Text style={styles.label}>{action.label}</Text>
           </TouchableOpacity>
@@ -59,12 +62,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderWidth: 1,
     borderColor: '#F0D5C8',
-  },
-  abbr: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: Colors.primary,
-    letterSpacing: 0.5,
   },
   label: {
     fontSize: 11,
