@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet,
-  SafeAreaView, KeyboardAvoidingView, Platform, Alert,
+  KeyboardAvoidingView, Platform, ScrollView, Alert,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '../constants/colors';
 import { BillCategory } from '../types';
 
 export default function BillPayScreen({ route, navigation }: any) {
+  const insets = useSafeAreaInsets();
   const category: BillCategory = route.params?.category;
   const [consumer, setConsumer] = useState('');
   const [amount, setAmount] = useState('');
@@ -14,106 +16,119 @@ export default function BillPayScreen({ route, navigation }: any) {
 
   const handlePay = () => {
     if (!consumer || !amount) {
-      Alert.alert('Required', 'Please enter consumer number and amount.');
+      Alert.alert('Required', 'Please fill all fields.');
       return;
     }
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      Alert.alert('Payment Successful', `₹${Number(amount).toLocaleString('en-IN')} paid for ${category?.label}`, [
-        { text: 'Done', onPress: () => navigation.goBack() },
-      ]);
+      Alert.alert(
+        'Payment Successful',
+        `₹${Number(amount).toLocaleString('en-IN')} paid for ${category?.label}`,
+        [{ text: 'Done', onPress: () => navigation.goBack() }]
+      );
     }, 1200);
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.flex}>
-        <View style={styles.content}>
-          <View style={styles.headerCard}>
-            <Text style={styles.icon}>{category?.icon || '💳'}</Text>
-            <Text style={styles.categoryName}>{category?.label || 'Bill Payment'}</Text>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
+      <ScrollView
+        style={styles.safe}
+        contentContainerStyle={{ padding: 16, paddingBottom: insets.bottom + 24 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.headerCard}>
+          <View style={styles.iconBox}>
+            <Text style={styles.iconText}>{category?.label?.slice(0, 2).toUpperCase() || 'BP'}</Text>
           </View>
-
-          <View style={styles.card}>
-            <View style={styles.field}>
-              <Text style={styles.label}>Consumer / Account Number *</Text>
-              <TextInput
-                style={styles.input}
-                value={consumer}
-                onChangeText={setConsumer}
-                placeholder="Enter number"
-                placeholderTextColor={Colors.textLight}
-                keyboardType="number-pad"
-              />
-            </View>
-            <View style={styles.field}>
-              <Text style={styles.label}>Amount (₹) *</Text>
-              <TextInput
-                style={styles.input}
-                value={amount}
-                onChangeText={setAmount}
-                placeholder="0.00"
-                placeholderTextColor={Colors.textLight}
-                keyboardType="decimal-pad"
-              />
-            </View>
-          </View>
-
-          <TouchableOpacity
-            style={[styles.btn, loading && styles.btnDisabled]}
-            onPress={handlePay}
-            activeOpacity={0.85}
-            disabled={loading}
-          >
-            <Text style={styles.btnText}>{loading ? 'Processing...' : 'Pay Now'}</Text>
-          </TouchableOpacity>
+          <Text style={styles.categoryName}>{category?.label || 'Bill Payment'}</Text>
         </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+
+        <View style={styles.card}>
+          <View style={styles.field}>
+            <Text style={styles.label}>Consumer / Account Number</Text>
+            <TextInput
+              style={styles.input}
+              value={consumer}
+              onChangeText={setConsumer}
+              placeholder="Enter number"
+              placeholderTextColor={Colors.textLight}
+              keyboardType="number-pad"
+            />
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.label}>Amount (₹)</Text>
+            <TextInput
+              style={styles.input}
+              value={amount}
+              onChangeText={setAmount}
+              placeholder="0.00"
+              placeholderTextColor={Colors.textLight}
+              keyboardType="decimal-pad"
+            />
+          </View>
+        </View>
+
+        <TouchableOpacity
+          style={[styles.btn, loading && styles.btnDisabled]}
+          onPress={handlePay}
+          activeOpacity={0.85}
+          disabled={loading}
+        >
+          <Text style={styles.btnText}>{loading ? 'Processing...' : 'Pay Now'}</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.background },
-  flex: { flex: 1 },
-  content: { padding: 16 },
   headerCard: {
     backgroundColor: Colors.white,
     borderRadius: 16,
-    padding: 20,
+    padding: 24,
     alignItems: 'center',
     marginBottom: 16,
-    shadowColor: Colors.shadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
     shadowRadius: 6,
     elevation: 2,
   },
-  icon: { fontSize: 40, marginBottom: 8 },
+  iconBox: {
+    width: 60,
+    height: 60,
+    borderRadius: 16,
+    backgroundColor: Colors.primaryLight,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 12,
+  },
+  iconText: { fontSize: 18, fontWeight: '700', color: Colors.primary },
   categoryName: { fontSize: 17, fontWeight: '700', color: Colors.text },
   card: {
     backgroundColor: Colors.white,
     borderRadius: 16,
-    padding: 16,
-    shadowColor: Colors.shadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 1,
+    padding: 18,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
     shadowRadius: 6,
     elevation: 2,
     marginBottom: 20,
   },
   field: { marginBottom: 16 },
-  label: { fontSize: 12, color: Colors.textSecondary, marginBottom: 6, fontWeight: '600' },
+  label: { fontSize: 12, color: Colors.textSecondary, marginBottom: 7, fontWeight: '600' },
   input: {
     borderWidth: 1,
     borderColor: Colors.border,
     borderRadius: 10,
     paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingVertical: 13,
     fontSize: 15,
     color: Colors.text,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.inputBg,
   },
   btn: { backgroundColor: Colors.primary, borderRadius: 14, paddingVertical: 16, alignItems: 'center' },
   btnDisabled: { backgroundColor: Colors.textLight },

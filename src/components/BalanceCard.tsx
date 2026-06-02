@@ -13,14 +13,14 @@ export default function BalanceCard({ netWorth, loading, onRefresh }: Props) {
     <View style={styles.card}>
       <Text style={styles.label}>Your Net Worth</Text>
       {loading ? (
-        <ActivityIndicator color={Colors.primary} style={{ marginVertical: 8 }} />
+        <ActivityIndicator color={Colors.primary} style={{ marginVertical: 10 }} />
       ) : (
         <Text style={styles.amount}>
-          ₹ {netWorth?.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+          {'₹'} {netWorth?.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
         </Text>
       )}
-      <TouchableOpacity style={styles.refreshRow} onPress={onRefresh}>
-        <Text style={styles.refreshText}>Refresh Net Worth ↻</Text>
+      <TouchableOpacity onPress={onRefresh} style={styles.refreshBtn}>
+        <Text style={styles.refreshText}>Refresh Net Worth</Text>
       </TouchableOpacity>
     </View>
   );
@@ -30,33 +30,37 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.white,
     marginHorizontal: 16,
-    marginTop: 12,
-    borderRadius: 14,
-    padding: 20,
+    marginTop: 14,
+    borderRadius: 16,
+    paddingVertical: 24,
+    paddingHorizontal: 20,
     alignItems: 'center',
-    shadowColor: Colors.shadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 8,
-    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 2,
   },
   label: {
     fontSize: 13,
     color: Colors.textSecondary,
-    marginBottom: 4,
+    letterSpacing: 0.2,
+    marginBottom: 6,
   },
   amount: {
-    fontSize: 30,
+    fontSize: 32,
     fontWeight: '700',
     color: Colors.text,
-    marginVertical: 4,
+    letterSpacing: -0.5,
+    marginBottom: 10,
   },
-  refreshRow: {
-    marginTop: 6,
+  refreshBtn: {
+    paddingVertical: 4,
+    paddingHorizontal: 12,
   },
   refreshText: {
     fontSize: 13,
     color: Colors.primary,
-    fontWeight: '500',
+    fontWeight: '600',
   },
 });

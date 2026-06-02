@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, SafeAreaView, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { api } from '../services/api';
 import { Offer } from '../types';
 import { Colors } from '../constants/colors';
 
 export default function OffersScreen() {
+  const insets = useSafeAreaInsets();
   const [offers, setOffers] = useState<Offer[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -14,69 +16,78 @@ export default function OffersScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.safe}>
+      <View style={styles.loader}>
         <ActivityIndicator size="large" color={Colors.primary} />
-      </SafeAreaView>
+      </View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <FlatList
-        data={offers}
-        keyExtractor={item => item.id}
-        contentContainerStyle={styles.list}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.card} activeOpacity={0.85}>
-            <View style={styles.cardTop}>
-              <View style={styles.tag}>
-                <Text style={styles.tagText}>{item.tag}</Text>
-              </View>
-              <Text style={styles.validity}>Till {item.validTill}</Text>
+    <FlatList
+      data={offers}
+      keyExtractor={item => item.id}
+      style={{ backgroundColor: Colors.background }}
+      contentContainerStyle={[styles.list, { paddingBottom: insets.bottom + 16 }]}
+      renderItem={({ item }) => (
+        <View style={styles.card}>
+          <View style={styles.cardTop}>
+            <View style={styles.tag}>
+              <Text style={styles.tagText}>{item.tag}</Text>
             </View>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.desc}>{item.description}</Text>
-            <TouchableOpacity style={styles.claimBtn} activeOpacity={0.8}>
-              <Text style={styles.claimText}>View Offer</Text>
-            </TouchableOpacity>
+            <Text style={styles.validity}>Till {item.validTill}</Text>
+          </View>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.desc}>{item.description}</Text>
+          <TouchableOpacity style={styles.claimBtn} activeOpacity={0.8}>
+            <Text style={styles.claimText}>View Offer</Text>
           </TouchableOpacity>
-        )}
-        ListHeaderComponent={<Text style={styles.heading}>Offers & Promotions</Text>}
-      />
-    </SafeAreaView>
+        </View>
+      )}
+      ListHeaderComponent={<Text style={styles.heading}>Offers & Promotions</Text>}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.background },
+  loader: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.background },
   list: { padding: 16 },
   heading: { fontSize: 20, fontWeight: '700', color: Colors.text, marginBottom: 16 },
   card: {
     backgroundColor: Colors.white,
     borderRadius: 16,
-    padding: 16,
+    padding: 18,
     marginBottom: 12,
-    shadowColor: Colors.shadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
     shadowRadius: 6,
     elevation: 2,
     borderLeftWidth: 4,
     borderLeftColor: Colors.primary,
   },
-  cardTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
-  tag: { backgroundColor: Colors.primaryLight, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20 },
-  tagText: { fontSize: 11, color: Colors.primary, fontWeight: '700' },
+  cardTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  tag: {
+    backgroundColor: Colors.primaryLight,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  tagText: { fontSize: 10, color: Colors.primary, fontWeight: '700', letterSpacing: 0.5 },
   validity: { fontSize: 11, color: Colors.textLight },
-  title: { fontSize: 15, fontWeight: '700', color: Colors.text, marginBottom: 6 },
-  desc: { fontSize: 13, color: Colors.textSecondary, lineHeight: 18, marginBottom: 14 },
+  title: { fontSize: 15, fontWeight: '700', color: Colors.text, marginBottom: 6, lineHeight: 21 },
+  desc: { fontSize: 13, color: Colors.textSecondary, lineHeight: 19, marginBottom: 14 },
   claimBtn: {
     alignSelf: 'flex-start',
     borderWidth: 1.5,
     borderColor: Colors.primary,
     paddingHorizontal: 16,
     paddingVertical: 8,
-    borderRadius: 20,
+    borderRadius: 8,
   },
   claimText: { fontSize: 13, color: Colors.primary, fontWeight: '700' },
 });

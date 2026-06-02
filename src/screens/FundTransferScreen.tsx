@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet,
-  SafeAreaView, KeyboardAvoidingView, Platform, ScrollView, Alert,
+  KeyboardAvoidingView, Platform, ScrollView, Alert,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '../constants/colors';
 
 export default function FundTransferScreen({ navigation }: any) {
+  const insets = useSafeAreaInsets();
   const [accountNo, setAccountNo] = useState('');
   const [ifsc, setIfsc] = useState('');
   const [name, setName] = useState('');
@@ -15,11 +17,11 @@ export default function FundTransferScreen({ navigation }: any) {
 
   const handleTransfer = () => {
     if (!accountNo || !ifsc || !name || !amount) {
-      Alert.alert('Missing fields', 'Please fill in all required fields.');
+      Alert.alert('Missing details', 'Please fill all required fields.');
       return;
     }
     if (isNaN(Number(amount)) || Number(amount) <= 0) {
-      Alert.alert('Invalid amount', 'Enter a valid transfer amount.');
+      Alert.alert('Invalid amount', 'Please enter a valid amount.');
       return;
     }
     setLoading(true);
@@ -30,114 +32,76 @@ export default function FundTransferScreen({ navigation }: any) {
         `₹${Number(amount).toLocaleString('en-IN')} sent to ${name}`,
         [{ text: 'Done', onPress: () => navigation.goBack() }]
       );
-    }, 1500);
+    }, 1400);
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.flex}>
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-          <Text style={styles.heading}>Fund Transfer</Text>
-          <Text style={styles.sub}>NEFT / IMPS / RTGS</Text>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
+      <ScrollView
+        style={styles.safe}
+        contentContainerStyle={{ padding: 16, paddingBottom: insets.bottom + 24 }}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.card}>
+          {[
+            { label: 'Account Number', value: accountNo, set: setAccountNo, keyboard: 'number-pad' as const, placeholder: 'Enter account number' },
+            { label: 'IFSC Code', value: ifsc, set: (v: string) => setIfsc(v.toUpperCase()), keyboard: 'default' as const, placeholder: 'e.g. OSBB0001234' },
+            { label: 'Beneficiary Name', value: name, set: setName, keyboard: 'default' as const, placeholder: 'Full name as per bank' },
+            { label: 'Amount (₹)', value: amount, set: setAmount, keyboard: 'decimal-pad' as const, placeholder: '0.00' },
+            { label: 'Remark (optional)', value: remark, set: setRemark, keyboard: 'default' as const, placeholder: 'Add a note' },
+          ].map(field => (
+            <View key={field.label} style={styles.field}>
+              <Text style={styles.label}>{field.label}</Text>
+              <TextInput
+                style={styles.input}
+                value={field.value}
+                onChangeText={field.set}
+                placeholder={field.placeholder}
+                placeholderTextColor={Colors.textLight}
+                keyboardType={field.keyboard}
+              />
+            </View>
+          ))}
+        </View>
 
-          <View style={styles.card}>
-            <View style={styles.field}>
-              <Text style={styles.label}>Account Number *</Text>
-              <TextInput
-                style={styles.input}
-                value={accountNo}
-                onChangeText={setAccountNo}
-                placeholder="Enter account number"
-                placeholderTextColor={Colors.textLight}
-                keyboardType="number-pad"
-              />
-            </View>
-            <View style={styles.field}>
-              <Text style={styles.label}>IFSC Code *</Text>
-              <TextInput
-                style={styles.input}
-                value={ifsc}
-                onChangeText={v => setIfsc(v.toUpperCase())}
-                placeholder="e.g. OSBB0001234"
-                placeholderTextColor={Colors.textLight}
-                autoCapitalize="characters"
-              />
-            </View>
-            <View style={styles.field}>
-              <Text style={styles.label}>Beneficiary Name *</Text>
-              <TextInput
-                style={styles.input}
-                value={name}
-                onChangeText={setName}
-                placeholder="Full name"
-                placeholderTextColor={Colors.textLight}
-              />
-            </View>
-            <View style={styles.field}>
-              <Text style={styles.label}>Amount (₹) *</Text>
-              <TextInput
-                style={styles.input}
-                value={amount}
-                onChangeText={setAmount}
-                placeholder="0.00"
-                placeholderTextColor={Colors.textLight}
-                keyboardType="decimal-pad"
-              />
-            </View>
-            <View style={styles.field}>
-              <Text style={styles.label}>Remark (optional)</Text>
-              <TextInput
-                style={styles.input}
-                value={remark}
-                onChangeText={setRemark}
-                placeholder="Add a note"
-                placeholderTextColor={Colors.textLight}
-              />
-            </View>
-          </View>
-
-          <TouchableOpacity
-            style={[styles.btn, loading && styles.btnDisabled]}
-            onPress={handleTransfer}
-            activeOpacity={0.85}
-            disabled={loading}
-          >
-            <Text style={styles.btnText}>{loading ? 'Processing...' : 'Transfer Now'}</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+        <TouchableOpacity
+          style={[styles.btn, loading && styles.btnDisabled]}
+          onPress={handleTransfer}
+          activeOpacity={0.85}
+          disabled={loading}
+        >
+          <Text style={styles.btnText}>{loading ? 'Processing...' : 'Transfer Now'}</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.background },
-  flex: { flex: 1 },
-  content: { padding: 16 },
-  heading: { fontSize: 22, fontWeight: '700', color: Colors.text, marginBottom: 4 },
-  sub: { fontSize: 13, color: Colors.textSecondary, marginBottom: 20 },
   card: {
     backgroundColor: Colors.white,
     borderRadius: 16,
-    padding: 16,
-    shadowColor: Colors.shadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 1,
+    padding: 18,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
     shadowRadius: 6,
     elevation: 2,
     marginBottom: 20,
   },
   field: { marginBottom: 16 },
-  label: { fontSize: 12, color: Colors.textSecondary, marginBottom: 6, fontWeight: '600' },
+  label: { fontSize: 12, color: Colors.textSecondary, marginBottom: 7, fontWeight: '600' },
   input: {
     borderWidth: 1,
     borderColor: Colors.border,
     borderRadius: 10,
     paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingVertical: 13,
     fontSize: 15,
     color: Colors.text,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.inputBg,
   },
   btn: {
     backgroundColor: Colors.primary,

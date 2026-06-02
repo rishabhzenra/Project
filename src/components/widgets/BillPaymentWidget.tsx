@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { Widget, BillCategory } from '../../types';
 import SectionHeader from '../SectionHeader';
 import { Colors } from '../../constants/colors';
@@ -32,8 +32,8 @@ export default function BillPaymentWidget({ widget, navigation }: Props) {
               onPress={() => navigation.navigate('BillPay', { category: cat })}
               activeOpacity={0.7}
             >
-              <View style={styles.iconCircle}>
-                <Text style={styles.icon}>{cat.icon}</Text>
+              <View style={styles.iconBox}>
+                <Text style={styles.iconText}>{cat.label.slice(0, 2).toUpperCase()}</Text>
               </View>
               <Text style={styles.label} numberOfLines={2}>{cat.label}</Text>
             </TouchableOpacity>
@@ -56,29 +56,33 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 4,
   },
-  iconCircle: {
+  iconBox: {
     width: 52,
     height: 52,
-    borderRadius: 26,
+    borderRadius: 14,
     backgroundColor: Colors.white,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 6,
+    marginBottom: 7,
     borderWidth: 1,
     borderColor: Colors.border,
-    shadowColor: Colors.shadow,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 1,
+    shadowOpacity: 0.04,
     shadowRadius: 3,
     elevation: 1,
   },
-  icon: {
-    fontSize: 22,
+  iconText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: Colors.primary,
+    letterSpacing: 0.5,
   },
   label: {
     fontSize: 10,
     color: Colors.textSecondary,
     textAlign: 'center',
     fontWeight: '500',
+    lineHeight: 14,
   },
 });

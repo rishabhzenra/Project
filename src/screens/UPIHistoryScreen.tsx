@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, SafeAreaView, ActivityIndicator, Text } from 'react-native';
+import { View, FlatList, StyleSheet, ActivityIndicator, Text } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { api } from '../services/api';
 import { Transaction } from '../types';
 import { Colors } from '../constants/colors';
 import TransactionItem from '../components/TransactionItem';
 
 export default function UPIHistoryScreen() {
+  const insets = useSafeAreaInsets();
   const [txns, setTxns] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -17,32 +19,31 @@ export default function UPIHistoryScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.safe}>
+      <View style={styles.loader}>
         <ActivityIndicator size="large" color={Colors.primary} />
-      </SafeAreaView>
+      </View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <FlatList
-        data={txns.length > 0 ? txns : []}
-        keyExtractor={item => item.id}
-        contentContainerStyle={styles.list}
-        renderItem={({ item }) => <TransactionItem tx={item} />}
-        ListHeaderComponent={<Text style={styles.heading}>UPI Transactions</Text>}
-        ListEmptyComponent={
-          <View style={styles.empty}>
-            <Text style={styles.emptyText}>No UPI transactions found</Text>
-          </View>
-        }
-      />
-    </SafeAreaView>
+    <FlatList
+      data={txns}
+      keyExtractor={item => item.id}
+      style={{ backgroundColor: Colors.background }}
+      contentContainerStyle={[styles.list, { paddingBottom: insets.bottom + 16 }]}
+      renderItem={({ item }) => <TransactionItem tx={item} />}
+      ListHeaderComponent={<Text style={styles.heading}>UPI Transactions</Text>}
+      ListEmptyComponent={
+        <View style={styles.empty}>
+          <Text style={styles.emptyText}>No UPI transactions yet</Text>
+        </View>
+      }
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.background },
+  loader: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.background },
   list: { padding: 16 },
   heading: { fontSize: 16, fontWeight: '700', color: Colors.text, marginBottom: 8 },
   empty: { alignItems: 'center', marginTop: 60 },

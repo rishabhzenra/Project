@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Text, View } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Text } from 'react-native';
 import { Colors } from '../constants/colors';
 
 import HomeScreen from '../screens/HomeScreen';
@@ -19,18 +19,19 @@ import BillPayScreen from '../screens/BillPayScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
-const screenOptions = {
-  headerStyle: { backgroundColor: Colors.white, elevation: 0, shadowOpacity: 0 },
+const headerStyle = {
+  headerStyle: { backgroundColor: Colors.white },
   headerTintColor: Colors.text,
   headerTitleStyle: { fontWeight: '700' as const, fontSize: 17 },
-  cardStyle: { backgroundColor: Colors.background },
+  contentStyle: { backgroundColor: Colors.background },
+  headerShadowVisible: false,
 };
 
 function HomeStack() {
   return (
-    <Stack.Navigator screenOptions={screenOptions}>
+    <Stack.Navigator screenOptions={headerStyle}>
       <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Accounts" component={AccountsScreen} options={{ title: 'My Accounts' }} />
       <Stack.Screen name="AccountDetail" component={AccountDetailScreen} options={{ title: 'Account Details' }} />
@@ -50,7 +51,7 @@ function HomeStack() {
 
 function BankingStack() {
   return (
-    <Stack.Navigator screenOptions={screenOptions}>
+    <Stack.Navigator screenOptions={headerStyle}>
       <Stack.Screen name="BankingHome" component={AccountsScreen} options={{ title: 'Banking' }} />
       <Stack.Screen name="AccountDetail" component={AccountDetailScreen} options={{ title: 'Account Details' }} />
       <Stack.Screen name="FixedDeposits" component={FixedDepositsScreen} options={{ title: 'Fixed Deposits' }} />
@@ -63,7 +64,7 @@ function BankingStack() {
 
 function PaymentsStack() {
   return (
-    <Stack.Navigator screenOptions={screenOptions}>
+    <Stack.Navigator screenOptions={headerStyle}>
       <Stack.Screen name="PaymentsHome" component={UPIScreen} options={{ title: 'Payments' }} />
       <Stack.Screen name="UPIHistory" component={UPIHistoryScreen} options={{ title: 'UPI History' }} />
       <Stack.Screen name="FundTransfer" component={FundTransferScreen} options={{ title: 'Fund Transfer' }} />
@@ -74,17 +75,9 @@ function PaymentsStack() {
 
 function InsuranceStack() {
   return (
-    <Stack.Navigator screenOptions={screenOptions}>
+    <Stack.Navigator screenOptions={headerStyle}>
       <Stack.Screen name="InsuranceHome" component={OffersScreen} options={{ title: 'Insurance & Offers' }} />
     </Stack.Navigator>
-  );
-}
-
-function TabIcon({ icon, focused }: { icon: string; focused: boolean }) {
-  return (
-    <View style={{ alignItems: 'center' }}>
-      <Text style={{ fontSize: 20, opacity: focused ? 1 : 0.5 }}>{icon}</Text>
-    </View>
   );
 }
 
@@ -110,22 +103,34 @@ export default function AppNavigator() {
         <Tab.Screen
           name="HomeTab"
           component={HomeStack}
-          options={{ title: 'Home', tabBarIcon: ({ focused }) => <TabIcon icon="🏠" focused={focused} /> }}
+          options={{
+            title: 'Home',
+            tabBarIcon: ({ color }) => <Text style={{ fontSize: 16, color }}>H</Text>,
+          }}
         />
         <Tab.Screen
           name="BankingTab"
           component={BankingStack}
-          options={{ title: 'Banking', tabBarIcon: ({ focused }) => <TabIcon icon="🏦" focused={focused} /> }}
+          options={{
+            title: 'Banking',
+            tabBarIcon: ({ color }) => <Text style={{ fontSize: 16, color }}>B</Text>,
+          }}
         />
         <Tab.Screen
           name="PaymentsTab"
           component={PaymentsStack}
-          options={{ title: 'Payments', tabBarIcon: ({ focused }) => <TabIcon icon="💳" focused={focused} /> }}
+          options={{
+            title: 'Payments',
+            tabBarIcon: ({ color }) => <Text style={{ fontSize: 16, color }}>P</Text>,
+          }}
         />
         <Tab.Screen
           name="InsuranceTab"
           component={InsuranceStack}
-          options={{ title: 'Insurance', tabBarIcon: ({ focused }) => <TabIcon icon="🛡️" focused={focused} /> }}
+          options={{
+            title: 'Insurance',
+            tabBarIcon: ({ color }) => <Text style={{ fontSize: 16, color }}>I</Text>,
+          }}
         />
       </Tab.Navigator>
     </NavigationContainer>

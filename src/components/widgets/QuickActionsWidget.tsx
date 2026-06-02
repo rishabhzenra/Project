@@ -5,10 +5,10 @@ import SectionHeader from '../SectionHeader';
 import { Colors } from '../../constants/colors';
 
 const ACTIONS = [
-  { label: 'QR Code', icon: '⬛', route: 'QRCode' },
-  { label: 'UPI ID', icon: '📲', route: 'UPI' },
-  { label: 'UPI History', icon: '📋', route: 'UPIHistory' },
-  { label: 'Send Money', icon: '💸', route: 'FundTransfer' },
+  { label: 'QR Code', abbr: 'QR', route: 'QRCode' },
+  { label: 'UPI ID', abbr: 'UP', route: 'UPI' },
+  { label: 'History', abbr: 'HX', route: 'UPIHistory' },
+  { label: 'Send', abbr: 'SN', route: 'FundTransfer' },
 ];
 
 interface Props {
@@ -29,7 +29,7 @@ export default function QuickActionsWidget({ widget, navigation }: Props) {
             activeOpacity={0.7}
           >
             <View style={styles.iconCircle}>
-              <Text style={styles.icon}>{action.icon}</Text>
+              <Text style={styles.abbr}>{action.abbr}</Text>
             </View>
             <Text style={styles.label}>{action.label}</Text>
           </TouchableOpacity>
@@ -44,25 +44,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingHorizontal: 16,
-    paddingBottom: 4,
   },
   item: {
     alignItems: 'center',
     width: 72,
   },
   iconCircle: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+    width: 54,
+    height: 54,
+    borderRadius: 27,
     backgroundColor: Colors.primaryLight,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 6,
+    marginBottom: 8,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: '#F0D5C8',
   },
-  icon: {
-    fontSize: 22,
+  abbr: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: Colors.primary,
+    letterSpacing: 0.5,
   },
   label: {
     fontSize: 11,
